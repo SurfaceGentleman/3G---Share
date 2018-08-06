@@ -14,6 +14,7 @@
 @property(nonatomic, strong)UITableView * tableView;
 @property(nonatomic, copy)NSArray * data;
 @property(nonatomic, copy)NSArray * head;
-
+@property(nonatomic, strong)UIButton * btn1;
+@property(nonatomic, strong)UIButton * btn2;
 
 @end

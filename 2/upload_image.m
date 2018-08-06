@@ -10,7 +10,7 @@
 #import "collection_picture.h"
 
 @interface upload_image ()
-<UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+<UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate>
 
 @end
 
@@ -141,21 +141,26 @@
     [self.view addSubview:btn8];
     
     UITextView * name = [[UITextView alloc] initWithFrame:CGRectMake(0, 345, self.view.frame.size.width, 30)];
+    name.tag = 301;
     name.backgroundColor = [UIColor whiteColor];
-    name.text = @"  作品名称";
-    name.textColor = [UIColor colorWithRed:0.83 green:0.83 blue:0.84 alpha:1.00];
     name.font = [UIFont systemFontOfSize:18];
     name.textAlignment = NSTextAlignmentLeft;
     name.delegate = self;
+    _label1 = [[UILabel alloc] initWithFrame:CGRectMake(15, 9, 80, 20)];
+    _label1.text = @"作品名称";
+    _label1.textColor = [UIColor colorWithRed:0.83 green:0.83 blue:0.84 alpha:1.00];
+    [name addSubview:_label1];
     [self.view addSubview:name];
     
     UITextView * detail = [[UITextView alloc] initWithFrame:CGRectMake(0, 400, self.view.frame.size.width, 110)];
     detail.backgroundColor = [UIColor whiteColor];
-    detail.textColor = [UIColor colorWithRed:0.83 green:0.83 blue:0.84 alpha:1.00];
     detail.font = [UIFont systemFontOfSize:17];
-    detail.text = @"  请添加作品说明/文章内容......";
     detail.textAlignment = NSTextAlignmentLeft;
     detail.delegate = self;
+    _label2 = [[UILabel alloc] initWithFrame:CGRectMake(15, 8, 300, 20)];
+    _label2.text = @"请添假作品说明/文章内容......";
+    _label2.textColor = [UIColor colorWithRed:0.83 green:0.83 blue:0.84 alpha:1.00];
+    [detail addSubview:_label2];
     [self.view addSubview:detail];
     
     UIView * viewButton = [[UIView alloc] initWithFrame:CGRectMake(10, 520, self.view.frame.size.width - 20, 55)];
@@ -243,6 +248,36 @@
     UIAlertAction * defaultAction = [UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleDefault handler:nil];
     [alert addAction: defaultAction];
     [self presentViewController: alert animated: YES completion:nil];
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if(textView.tag == 301) {
+        _label1.hidden = YES;
+    }
+    else{
+        _label2.hidden = YES;
+    }
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if (textView.tag == 301) {
+        if (textView.text.length == 0) {
+            _label1.hidden = NO;
+        }
+        else {
+            _label1.hidden = YES;
+        }
+    }
+    else {
+        if (textView.text.length == 0) {
+            _label2.hidden = NO;
+        }
+        else {
+            _label2.hidden = YES;
+        }
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

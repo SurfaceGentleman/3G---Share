@@ -66,20 +66,28 @@
         if (cell2 == nil) {
             cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ID2"];
             if (indexPath.section == 3) {
-                UIButton * btn1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                btn1.frame = CGRectMake(100, 15, 60, 30);
-                btn1.imageView.frame = CGRectMake(0, 0, 25, 25);
-                [btn1 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateNormal];
-                [btn1 setTitle:@"男" forState:UIControlStateNormal];
-                [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [cell2.contentView addSubview:btn1];
-                UIButton * btn2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                btn2.frame = CGRectMake(160, 15, 80, 30);
-                [btn2 setImage:[UIImage imageNamed:@"girl_button"] forState:UIControlStateNormal];
-                [btn2 setTitle:@"女" forState:UIControlStateNormal];
-                [btn2 setTintColor:[UIColor grayColor]];
-                [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [cell2.contentView addSubview:btn2];
+                _btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+                [_btn1 addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+                _btn1.frame = CGRectMake(100, 15, 40, 30);
+                _btn1.imageView.frame = CGRectMake(0, 0, 25, 25);
+                [_btn1 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateNormal];
+                [_btn1 setTitle:@"男" forState:UIControlStateNormal];
+                [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+                [_btn1 setImage:[UIImage imageNamed:@"girl_button"] forState:UIControlStateSelected];
+                _btn1.tag = 101;
+                [cell2.contentView addSubview:_btn1];
+                _btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+                _btn2.frame = CGRectMake(160, 15, 40, 30);
+                [_btn2 setImage:[UIImage imageNamed:@"boy_button"] forState:UIControlStateNormal];
+                [_btn2 setImage:[UIImage imageNamed:@"girl_button"] forState:UIControlStateSelected];
+                [_btn2 setTitle:@"女" forState:UIControlStateNormal];
+                [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+                [_btn2 addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+                _btn2.tag = 102;
+                _btn2.selected = YES;
+                [cell2.contentView addSubview:_btn2];
             }
             else{
                 UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 300, 20)];
@@ -113,6 +121,18 @@
 {
     return 0.1;
 }
+
+- (void)click:(UIButton *)btn
+{
+    btn.selected = !btn.selected;
+    if (btn.tag == 101) {
+        _btn2.selected = !_btn2.selected;
+    }
+    else {
+        _btn1.selected = !_btn1.selected;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

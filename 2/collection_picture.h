@@ -12,5 +12,8 @@
 <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property(nonatomic, copy)NSArray * image;
+@property(nonatomic, strong)UIButton * btn;
+@property(nonatomic, strong)NSMutableArray * btns;
+@property(nonatomic, strong)UIImageView * se;
 
 @end

@@ -29,7 +29,9 @@
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellID"];
     collectionView.delegate = self;
     collectionView.dataSource = self;
+    collectionView.allowsMultipleSelection = YES;
     [self.view addSubview:collectionView];
+    
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -49,14 +51,7 @@
     UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 130, 130)];
     imageView.image = [UIImage imageNamed:_image[indexPath.item]];
     cell.backgroundView = imageView;
-    UIButton * btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btn.frame = CGRectMake(100, 10, 20, 20);
-    [btn setImage:[UIImage imageNamed:@"my_button_normal"] forState:normal];
-    [btn setImage:[UIImage imageNamed:@"my_button_pressed"] forState:UIControlStateSelected];
-    btn.tintColor = [UIColor orangeColor];
-    btn.backgroundColor = [UIColor whiteColor];
-    [btn addTarget:self action:@selector(press:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.contentView addSubview:btn];
+    
     return cell;
 }
 
@@ -67,7 +62,23 @@
 
 - (void)press:(UIButton *)btn
 {
-    btn.selected = !btn.selected;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    _se = [[UIImageView alloc] initWithFrame:CGRectMake(100, 10, 20, 20)];
+    _se.image = [UIImage imageNamed:@"my_button_normal"];
+    [cell.contentView addSubview:_se];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell * cell = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 130, 130)];
+    imageView.image = [UIImage imageNamed:_image[indexPath.item]];
+    [cell.contentView addSubview:imageView];
 }
 
 - (void)didReceiveMemoryWarning {
